@@ -11,7 +11,9 @@ var period = 2000;
 while (true)
 {
     Console.Write("PLease enter number of loading page period in milliseconds(recommended 2000): ");
+    Console.ForegroundColor = ConsoleColor.Yellow;
     var periodStr = Console.ReadLine();
+    Console.ForegroundColor = ConsoleColor.Green;
     if (int.TryParse(periodStr, out int t) && t >= 0)
     {
         period = t;
@@ -25,7 +27,35 @@ while (true)
     }
 }
 
-IInstagram instagram = new InstagramSelenium("C:\\Users\\Andrij\\Downloads\\chromedriver.exe", period);
+IInstagram instagram;
+
+while (true)
+{
+    Console.Write("PLease enter Chromedriver path: ");
+    Console.ForegroundColor = ConsoleColor.Yellow;
+    var path = Console.ReadLine();
+    Console.ForegroundColor = ConsoleColor.Green;
+    try
+    {
+        if (!string.IsNullOrEmpty(path))
+        {
+            instagram = new InstagramSelenium(path, period);
+            break;
+        }
+        else
+        {
+            throw new Exception();
+        }
+    }
+    catch
+    {
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.WriteLine("Incorrect path");
+        Console.ForegroundColor = ConsoleColor.Green;
+    }
+}
+
+//IInstagram instagram = new InstagramSelenium("C:\\Users\\Andrij\\Downloads\\chromedriver.exe", period);
 IInstagramUser? user = null;
 
 Console.WriteLine();
